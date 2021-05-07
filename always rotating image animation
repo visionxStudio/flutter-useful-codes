@@ -1,0 +1,43 @@
+SlidingUpPanel(
+          maxHeight: _height * 0.5,
+          minHeight: 60,
+          collapsed: Row(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                alignment: Alignment.center,
+                color: Colors.white,
+                child: new AnimatedBuilder(
+                  animation: animationController!,
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      image: audioPlayer.isPlaying.valueWrapper!.value
+                          ? DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/collection-album.jpg"),
+                            )
+                          : DecorationImage(
+                              image: FileImage(
+                                  File(audioPlayer.getCurrentAudioImage!.path)),
+                            ),
+                    ),
+                  ),
+                  builder: (BuildContext context, Widget? _widget) {
+                    return Transform.rotate(
+                      child: _widget,
+                      angle: !audioPlayer.isPlaying.valueWrapper!.value
+                          ? animationController!.value * 0
+                          : animationController!.value * 6.3,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+          panel: Center(
+            child: Text("This is the sliding widget"),
+          ),
+        ),
